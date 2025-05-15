@@ -1,0 +1,15 @@
+FROM ruby:3.3.4
+
+ENV APP_HOME /app
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
+
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get update \
+    && apt-get install -y nodejs watchman vim \
+    && npm install -g npm@latest
+
+ADD Gemfile* $APP_HOME/
+RUN bundle install --no-cache
+
+ENV EDITOR=vim

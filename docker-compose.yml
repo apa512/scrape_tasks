@@ -1,0 +1,17 @@
+services:
+  web:
+    build:
+      dockerfile: Dockerfile-dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/tmp
+      - /app/public
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+    command: bash -c "rm -f /app/tmp/pids/server.pid && foreman start -f Procfile.dev"
+    tty: true
+    init: true
+    stop_grace_period: 30s

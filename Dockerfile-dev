@@ -9,6 +9,36 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs watchman vim \
     && npm install -g npm@latest
 
+# Install dependencies for Chrome
+RUN apt-get update && apt-get install -y \
+    wget \
+    unzip \
+    xvfb \
+    libnss3 \
+    libgbm1 \
+    libasound2 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libcups2 \
+    libdrm2 \
+    libxkbcommon0 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxrandr2 \
+    libpango-1.0-0 \
+    libcairo2
+
+# Download Chromium directly
+RUN mkdir -p /opt/chrome \
+    && wget -q https://download-chromium.appspot.com/dl/Linux_x64 -O /tmp/chrome.zip \
+    && unzip /tmp/chrome.zip -d /opt/chrome \
+    && chmod +x /opt/chrome/chrome-linux/chrome \
+    && rm /tmp/chrome.zip
+
+# Add Chrome binary to PATH
+ENV PATH="/opt/chrome/chrome-linux:${PATH}"
+
 ADD Gemfile* $APP_HOME/
 RUN bundle install --no-cache
 

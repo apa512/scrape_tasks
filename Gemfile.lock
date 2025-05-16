@@ -119,6 +119,8 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    horsefield (0.6.1)
+      nokogiri
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.1.0)
@@ -160,6 +162,8 @@ GEM
     matrix (0.4.2)
     mini_mime (1.1.5)
     minitest (5.25.5)
+    mocha (2.7.1)
+      ruby2_keywords (>= 0.0.5)
     msgpack (1.8.0)
     net-imap (0.5.8)
       date
@@ -284,6 +288,7 @@ GEM
       rubocop-performance (>= 1.24)
       rubocop-rails (>= 2.30)
     ruby-progressbar (1.13.0)
+    ruby2_keywords (0.0.5)
     rubyzip (2.4.1)
     securerandom (0.4.1)
     selenium-webdriver (4.32.0)
@@ -379,9 +384,11 @@ DEPENDENCIES
   debug
   ferrum
   foreman
+  horsefield
   importmap-rails
   jbuilder
   kamal
+  mocha
   propshaft
   puma (>= 5.0)
   rails (~> 8.0.2)

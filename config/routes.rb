@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   
-  resources :scrape_tasks, only: [:create]
+  resources :scrape_tasks, only: [:new, :create]
+  root "scrape_tasks#new"
 end

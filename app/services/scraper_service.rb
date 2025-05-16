@@ -1,5 +1,4 @@
 class ScraperService
-  # Create and use a dynamic scraper based on provided selectors
   def self.scrape(html_content, selectors)
     scraper = create_dynamic_scraper(selectors)
     scraper.new(html_content).scrape
@@ -7,14 +6,34 @@ class ScraperService
 
   private
 
-  # Create a dynamic scraper class with the provided selectors
   def self.create_dynamic_scraper(selectors_map)
-    Class.new do
-      include Horsefield::Scraper
+    meta_keys = selectors_map.delete("meta")
 
-      selectors_map.each do |key, selector|
+    scraper_class = Class.new do
+      include Horsefield::Scraper
+    end
+
+    selectors_map.each do |key, selector|
+      scraper_class.instance_exec do
         one key, selector
       end
     end
+
+    if meta_keys && meta_keys.is_a?(Array)
+      scraper_class.instance_exec do
+        one :meta do
+          result = {}
+
+          meta_keys.each do |key|
+            value = at(".//meta[@name='#{key}']/@content")&.text
+            result[key] = value if value
+          end
+
+          result
+        end
+      end
+    end
+
+    scraper_class
   end
 end
